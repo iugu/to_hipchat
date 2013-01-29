@@ -13,21 +13,26 @@ class App
       help_now! "You need to supply at least token and room options so I know where to send data. You can also set them up on an environment variable named TO_HIPCHAT_DEFAULT_OPTIONS" 
     end
 
+    debug "Token: " + options[:token]
+    debug "Room: " + options[:room]
+    debug "Username: " + options[:username]
+
     ToHipchat.send_data options[:token], options[:room], options[:username], data 
   end
 
   description "Sends data to a hipchat chatroom"
 
-  on("-t TOKEN", "--token TOKEN","Hipchat Token")
-  on("-r ROOM", "--room ROOM","Hipchat Room")
-  on("-u USERNAME", "--username USERNAME","Hipchat display username")
+  on("-t TOKEN", "--token TOKEN", "Hipchat Token")
+  on("-r ROOM", "--room ROOM", "Hipchat Room")
+  on("-u USERNAME", "--username USERNAME", "Hipchat display username")
+
   arg :data
 
   version ToHipchat::VERSION
 
   use_log_level_option
 
-  defaults_from_env_var ENV['TO_HIPCHAT_DEFAULT_OPTIONS']
+  defaults_from_env_var 'TO_HIPCHAT_DEFAULT_OPTIONS'
 
   go!
 end

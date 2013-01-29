@@ -12,13 +12,10 @@ module ToHipchat
       debug "Sending data to room " + room + " as username " + username
       client[room].send(username, data)
     rescue HipChat::UnknownRoom
-      debug "ERROR: UnknownRoom"
       error "Unknown Room"
     rescue HipChat::Unauthorized
-      debug "ERROR: Unauthorized"
       error "Unauthorized"
     rescue HipChat::UnknownResponseCode
-      debug "ERROR: UnknownResponseCode"
       error "Unknown Response Code"
     end
   end
