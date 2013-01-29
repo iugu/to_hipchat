@@ -1,0 +1,11 @@
+pkg
+*.gem
+.bundle
+pkg/*
+html
+.*.sw?
+tmp
+results.html
+coverage
+*.rbc
+.DS_Store
