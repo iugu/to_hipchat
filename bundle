@@ -1,0 +1,82 @@
+# ToHipchat
+
+TODO: Write a gem description
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+    gem 'to_hipchat'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install to_hipchat
+
+## Usage
+
+TODO: Write usage instructions here
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'methadone'
+require 'to_hipchat'
+
+class App
+  include Methadone::Main
+  include Methadone::CLILogging
+
+  main do |data|
+    unless options[:token] && options[:room]
+      help_now! "You must supply at least the token and room options so I know where to send data. You can also set the TO_HIPCHAT_DEFAULT_OPTIONS env variable with the options"
+    end
+
+    ToHipchat.send_data(options[:token], options[:room], options[:username], data)
+  end
+
+  # supplemental methods here
+
+  # Declare command-line interface here
+
+  description "Sends data to a hipchat chatroom"
+  #
+  # Accept flags via:
+  # on("--flag VAL","Some flag")
+  # options[flag] will contain VAL
+  #
+  # Specify switches via:
+  # on("--[no-]switch","Some switch")
+  #
+  # Or, just call OptionParser methods on opts
+  #
+  # Require an argument
+  # arg :some_arg 
+  #
+  # # Make an argument optional
+  # arg :optional_arg, :optional
+
+  on("-t TOKEN", "--token","Hipchat Token")
+  on("-u USERNAME","--username","Username to display when sending message")
+  on("-r ROOM","--room","Room to send the data to")
+  
+  arg :data, "Data to send to the chatroom"
+
+  version ToHipchat::VERSION
+
+  use_log_level_option
+
+  defaults_from_env_var ENV['TO_HIPCHAT_DEFAULT_OPTIONS']
+
+  go!
+end
