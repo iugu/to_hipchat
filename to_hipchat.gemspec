@@ -7,10 +7,10 @@ Gem::Specification.new do |gem|
   gem.name          = "to_hipchat"
   gem.version       = ToHipchat::VERSION
   gem.authors       = ["Marcelo Paez Sequeira"]
-  gem.email         = ["paezao@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.email         = ["marcelo@iugu.com"]
+  gem.description   = %q{Command-line app that sends data to a hipchat chatroom}
+  gem.summary       = %q{CLI To Send Data To Hipchat}
+  gem.homepage      = "https://github.com/iugu/to_hipchat"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
