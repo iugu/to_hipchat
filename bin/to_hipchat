@@ -8,36 +8,26 @@ class App
   include Methadone::Main
   include Methadone::CLILogging
 
-  main do # Add args you want: |like,so|
-    # your program code here
-    # You can access CLI options via
-    # the options Hash
+  main do |data|
+    unless options[:token] && options[:room]
+      help_now! "You need to supply at least token and room options so I know where to send data. You can also set them up on an environment variable named TO_HIPCHAT_DEFAULT_OPTIONS" 
+    end
+
+    ToHipchat.send_data options[:token], options[:room], options[:username], data 
   end
 
-  # supplemental methods here
+  description "Sends data to a hipchat chatroom"
 
-  # Declare command-line interface here
-
-  # description "one line description of your app"
-  #
-  # Accept flags via:
-  # on("--flag VAL","Some flag")
-  # options[flag] will contain VAL
-  #
-  # Specify switches via:
-  # on("--[no-]switch","Some switch")
-  #
-  # Or, just call OptionParser methods on opts
-  #
-  # Require an argument
-  # arg :some_arg 
-  #
-  # # Make an argument optional
-  # arg :optional_arg, :optional
+  on("-t TOKEN", "--token TOKEN","Hipchat Token")
+  on("-r ROOM", "--room ROOM","Hipchat Room")
+  on("-u USERNAME", "--username USERNAME","Hipchat display username")
+  arg :data
 
   version ToHipchat::VERSION
 
   use_log_level_option
+
+  defaults_from_env_var ENV['TO_HIPCHAT_DEFAULT_OPTIONS']
 
   go!
 end
