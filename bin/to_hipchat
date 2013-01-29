@@ -8,10 +8,15 @@ class App
   include Methadone::Main
   include Methadone::CLILogging
 
-  main do |data|
+  main do
     unless options[:token] && options[:room]
       help_now! "You need to supply at least token and room options so I know where to send data. You can also set them up on an environment variable named TO_HIPCHAT_DEFAULT_OPTIONS" 
     end
+
+    data = ARGV.shift
+    data = ARGF.read unless data
+
+    exit_now! "Supply data to send" unless data 
 
     debug "Token: " + options[:token]
     debug "Room: " + options[:room]
@@ -26,7 +31,7 @@ class App
   on("-r ROOM", "--room ROOM", "Hipchat Room")
   on("-u USERNAME", "--username USERNAME", "Hipchat display username")
 
-  arg :data
+  arg :data, :optional
 
   version ToHipchat::VERSION
 
